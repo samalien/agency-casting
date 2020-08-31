@@ -25,24 +25,22 @@ def initialise_database():
     movie.insert()
     movie = Movie(title='Weathering with You', release_date='2016/5/4')
     movie.insert()
-    movie = Movie(title='Ransom', release_date='2016/5/4')
-    movie.insert()
 
-    actor = Actor(name='Andrea Riseborough', age=25, gender='Male')
+
+    actor = Actor(name='Will smith', age=25, gender='Male')
     actor.insert()
     actor = Actor(name='William powell', age=53, gender='Male')
     actor.insert()
-    actor = Actor(name='Betty Gilpin', age=23, gender='Female')
-    actor.insert()
+
 
 
     performance = Performance(movie_id=1, actor_id=1, actor_fee=600)
     performance.insert()
     performance = Performance(movie_id=2, actor_id=1, actor_fee=500)
     performance.insert()
-    performance = Performance(movie_id=2, actor_id=3, actor_fee=1000)
+    performance = Performance(movie_id=2, actor_id=2, actor_fee=1000)
     performance.insert()
-   
+
 #--------------------------------------------------------
 # Movie
 #--------------------------------------------------------
