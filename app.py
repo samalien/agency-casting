@@ -57,53 +57,7 @@ def create_app(test_config=None):
 
     @app.route('/')
     def index():
-        movie = Movie(title='Bad Boys for Life', release_date='2020/1/17')
-        movie.insert()
-        movie = Movie(title='Dolittle', release_date='2019/5/4')
-        movie.insert()
-        movie = Movie(title='Weathering with You', release_date='2016/5/4')
-        movie.insert()
-        movie = Movie(title='Ransom', release_date='2016/5/4')
-        movie.insert()
-
-        actor = Actor(name='Andrea Riseborough', age=25, gender='Male')
-        actor.insert()
-        actor = Actor(name='William powell', age=53, gender='Male')
-        actor.insert()
-        actor = Actor(name='Betty Gilpin', age=23, gender='Female')
-        actor.insert()
-        actor = Actor(name='Will Smith', age=53, gender='Male')
-        actor.insert()
-        actor = Actor(name='Selena Gomez', age=32, gender='Female')
-        actor.insert()
-
-        performance = Performance(movie_id=1, actor_id=1, actor_fee=600)
-        performance.insert()
-        performance = Performance(movie_id=1, actor_id=2, actor_fee=800)
-        performance.insert()
-        performance = Performance(movie_id=2, actor_id=1, actor_fee=500)
-        performance.insert()
-        performance = Performance(movie_id=2, actor_id=3, actor_fee=1000)
-        performance.insert()
-        performance = Performance(movie_id=3, actor_id=4, actor_fee=700)
-        performance.insert()
-        performance = Performance(movie_id=4, actor_id=3, actor_fee=650)
-        performance.insert()
-        performance = Performance(movie_id=4, actor_id=2, actor_fee=580)
-        performance.insert()
-        movies = Movie.query.all()
-        current_movies = paginate_movies(request, movies)
-
-        # if there are no movies abort 404
-        if len(current_movies) == 0:
-            abort(404)
-
-        # return data to view
-        return jsonify({
-            'success': True,
-            'movies': current_movies,
-            'total_movies': len(movies)
-        })
+        return "Welcome to Casting Agency"
     # ------------------------------------------------------------------------
     # API endpoints : movies GET/POST/DELETE/PATCH
     # ------------------------------------------------------------------------
