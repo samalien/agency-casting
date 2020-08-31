@@ -55,6 +55,9 @@ def create_app(test_config=None):
         current_actors = formatted_actors[start:end]
         return current_actors
 
+    @app.route('/')
+    def index():
+        return "Welcome casting agency"
     # ------------------------------------------------------------------------
     # API endpoints : movies GET/POST/DELETE/PATCH
     # ------------------------------------------------------------------------
