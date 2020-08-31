@@ -38,8 +38,7 @@ def initialise_database():
     performance.insert()
     performance = Performance(movie_id=2, actor_id=1, actor_fee=500)
     performance.insert()
-    performance = Performance(movie_id=2, actor_id=2, actor_fee=1000)
-    performance.insert()
+
 
 #--------------------------------------------------------
 # Movie

@@ -180,7 +180,7 @@ class CastingAgencyTest(unittest.TestCase):
     # TESTS DELETE MOVIE
     # ----------------------------------------------------------------------------------------------------------------
     def test_delete_movie(self):
-        res = self.client().delete('/movies/3', headers=casting_producer_auth_header)
+        res = self.client().delete('/movies/2', headers=casting_producer_auth_header)
         data = json.loads(res.data)
 
         self.assertEqual(data['success'], True)
@@ -334,7 +334,8 @@ class CastingAgencyTest(unittest.TestCase):
     # TESTS DELETE ACTOR
     # ----------------------------------------------------------------------------------------------------------------
     def test_delete_actor(self):
-        res = self.client().delete('/actors/3', headers=casting_producer_auth_header)
+        res = self.client().delete('/actors/2', headers=casting_producer_auth_header)
+        print(res)
         data = json.loads(res.data)
 
         self.assertEqual(data['success'], True)
