@@ -57,6 +57,8 @@ def create_app(test_config=None):
 
     @app.route('/')
     def index():
+        movie = Movie(title='The Grudge', release_date='2020/1/3')
+        movie.insert()
         movies = Movie.query.all()
         current_movies = paginate_movies(request, movies)
 
