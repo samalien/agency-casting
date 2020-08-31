@@ -57,7 +57,19 @@ def create_app(test_config=None):
 
     @app.route('/')
     def index():
-        return "Welcome casting agency"
+        movies = Movie.query.all()
+        current_movies = paginate_movies(request, movies)
+
+        # if there are no movies abort 404
+        if len(current_movies) == 0:
+            abort(404)
+
+        # return data to view
+        return jsonify({
+            'success': True,
+            'movies': current_movies,
+            'total_movies': len(movies)
+        })
     # ------------------------------------------------------------------------
     # API endpoints : movies GET/POST/DELETE/PATCH
     # ------------------------------------------------------------------------
