@@ -1,4 +1,4 @@
-#
+# this file is in .gitignore because it contain a sensible data
 AUTH0_DOMAIN = 'dev-mrlzc2vg.us.auth0.com'
 ALGORITHMS = ['RS256']
 API_AUDIENCE = 'casting'
