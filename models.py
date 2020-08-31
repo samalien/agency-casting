@@ -4,7 +4,8 @@ from sqlalchemy import Column, Integer, String, create_engine
 
 
 database_name = 'agencydb'
-database_path = "postgres://{}@{}/{}". format('postgres:alien','localhost:5432', database_name)
+# database_path = "postgres://{}@{}/{}". format('postgres:alien','localhost:5432', database_name)
+database_path = "postgres://mzlssobwtfvevv:775b42b209c4c1a60d328af6a2579b1cf71e4dc3274d263732a31599a24b9913@ec2-52-200-111-186.compute-1.amazonaws.com:5432/d4m6kfhcpulj2t"
 db=SQLAlchemy()
 
 # binds a flask application and a SQLAlchemy service
