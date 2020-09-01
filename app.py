@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, request, abort, jsonify,render_template
+from flask import Flask, request, abort, jsonify, render_template, session
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from models import setup_db, Movie, Actor, Performance, db
@@ -61,15 +61,14 @@ def create_app(test_config=None):
 
     @app.route('/login')
     def login():
-        token = request.args.get('token')
-        print(token)
         return "https://dev-mrlzc2vg.us.auth0.com/authorize?audience=casting&response_type=token&client_id" \
                "=4bH07NXNIJ02BMCRkZsN85JYRDkB4sVI&redirect_uri=https://agency-casting.herokuapp.com "
     @app.route('/login_result')
     def login_result():
         access_token = request.args.get('access_token')
-        token_type = request.args.get('token_type')
-        return access_token
+        session['jwt_token'] = access_token
+
+        return  render_template('login_result.html')
 
     # ------------------------------------------------------------------------
     # API endpoints : movies GET/POST/DELETE/PATCH
