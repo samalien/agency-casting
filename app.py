@@ -18,6 +18,7 @@ def create_app(test_config=None):
     setup_db(app)
     CORS(app)
     migrate = Migrate(app, db)
+    app.secret_key = "shdgfjhsdghj"
 
     # ------------------------------------------------------------------------
     # set Access-Control-allow, API Cofiguration
@@ -68,7 +69,7 @@ def create_app(test_config=None):
         access_token = request.args.get('access_token')
         session['jwt_token'] = access_token
 
-        return  render_template('login_result.html')
+        return  render_template('dashboard.html')
 
     # ------------------------------------------------------------------------
     # API endpoints : movies GET/POST/DELETE/PATCH
