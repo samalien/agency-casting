@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Casting Agency</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+<div class="container">
+  <div class="logo">
+    <img src="static/logo.png" alt="Agency Casting"/>
+  </div>
+  <nav>
+      <ul>
+        <li>
+          <a href="/login">login(in ligne)</a>
+          <a href="https://dev-mrlzc2vg.us.auth0.com/authorize?audience=casting&response_type=token&client_id=4bH07NXNIJ02BMCRkZsN85JYRDkB4sVI&redirect_uri=https://127.0.0.1:8080/login_result">&nbsp;Login</a>
+        </li>
+      </ul>
+  </nav>
+</div>
+<hr />
+<div>
+  <h1>Assistant:</h1>
+  <p><strong>Username</strong>: assistant@agency.com<br />password: Assistant1</p>
+  <br/>
+  <h1>director:</h1>
+  <p><strong>Username</strong>: director@agency.com<br />
+    <strong>password</strong>: Director1</p>
+    <br/>
+  <h1>Producer:</h1>
+  <p><strong>Username</strong>: producer@agency.com<br />
+    <strong>password</strong>: Producer1</p>
+</div>
+</body>
+
