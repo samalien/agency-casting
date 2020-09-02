@@ -24,7 +24,7 @@ def create_app(test_config=None):
     app.secret_key = "udacity"
 
     # ------------------------------------------------------------------------
-    # set Access-Control-allow, API Cofiguration
+    # set Access-Control-allow, API Configuration
     # ------------------------------------------------------------------------
     @app.after_request
     def after_request(response):
@@ -33,6 +33,7 @@ def create_app(test_config=None):
         response.headers.add('Access-Control-Allow-Methods',
                              'GET,PUT,POST,PUT,PATCH,DELETE,OPTIONS')
         return response
+
     oauth = OAuth(app)
 
     auth0 = oauth.register(
@@ -46,9 +47,11 @@ def create_app(test_config=None):
             'scope': 'openid profile email',
         },
     )
+
     # --------------------------------------------------------------------------
     # Custom Functions
     # --------------------------------------------------------------------------
+
     def paginate_movies(request, selection):
         page = request.args.get('page', 1, type=int)
 
@@ -108,7 +111,7 @@ def create_app(test_config=None):
             'success': True,
             'movies': current_movies,
             'total_movies': len(movies)
-        })
+        }), 200
 
     # CREATE / SEARCH MOVIES
     @app.route('/movies/search', methods=['POST'])
@@ -142,7 +145,7 @@ def create_app(test_config=None):
                     'success': True,
                     'movies': current_movies,
                     'total_movies': len(Movie.query.all())
-                })
+                }), 200
             else:
 
                 # create and insert new movie
@@ -158,7 +161,7 @@ def create_app(test_config=None):
                     'created': movie.id,
                     'movies': formatted_movies,
                     'total_movies': len(movies)
-                })
+                }), 200
         except:
             abort(401)
 
@@ -189,7 +192,7 @@ def create_app(test_config=None):
                 'deleted': movie_id,
                 'movies': formatted_movies,
                 'total_movies': len(movies)
-            })
+            }), 200
         except:
             # if problem deleting
             abort(422)
@@ -230,7 +233,7 @@ def create_app(test_config=None):
                 'updated': movie_id,
                 'movies': formatted_movies,
                 'total_movies': len(movies)
-            })
+            }), 200
         except:
             # if problem updating
             abort(401)
@@ -253,7 +256,7 @@ def create_app(test_config=None):
             'success': True,
             'movies': movies,
             'total_movies_by_actor': len(movies)
-        })
+        }), 200
 
     # ------------------------------------------------------------------------
     # API endpoints : actors GET/POST/DELETE/PATCH
@@ -275,7 +278,7 @@ def create_app(test_config=None):
             'success': True,
             'actors': current_actors,
             'total_actors': len(actors)
-        })
+        }), 200
 
     # CREATE / SEARCH BY NAME
     @app.route('/actors/search', methods=['POST'])
@@ -304,7 +307,7 @@ def create_app(test_config=None):
                     'success': True,
                     'actors': current_actors,
                     'total_actors': len(Actor.query.all())
-                })
+                }), 200
             else:
                 # ensure all fields have data
                 if not new_name or not new_age or not new_gender:
@@ -323,7 +326,7 @@ def create_app(test_config=None):
                     'created': actor.id,
                     'actors': formatted_actors,
                     'total_actors': len(actors)
-                })
+                }), 200
         except:
             abort(422)
 
@@ -350,7 +353,7 @@ def create_app(test_config=None):
                 'deleted': actor_id,
                 'actors': formatted_actors,
                 'total_actors': len(actors)
-            })
+            }), 200
         except:
             # if problem deleting
             abort(422)
@@ -416,7 +419,7 @@ def create_app(test_config=None):
             'success': True,
             'actors': actors,
             'total_actors_by_movie': len(actors)
-        })
+        }), 200
 
     # ------------------------------------------------------------------------------------
     # Error handler

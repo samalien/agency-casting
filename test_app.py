@@ -335,7 +335,6 @@ class CastingAgencyTest(unittest.TestCase):
     # ----------------------------------------------------------------------------------------------------------------
     def test_delete_actor(self):
         res = self.client().delete('/actors/2', headers=casting_producer_auth_header)
-        print(res)
         data = json.loads(res.data)
 
         self.assertEqual(data['success'], True)

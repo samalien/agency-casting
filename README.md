@@ -1,6 +1,7 @@
 # Casting Agency
 Casting Agency is a company that creating movies and managing and assigning actors to those movies.
-Hosted on heroku: [url](https://agency-casting.herokuapp.com/)
+
+Hosted on heroku: [https://agency-casting.herokuapp.com/](https://agency-casting.herokuapp.com/)
 # Motivation
 This is my capstone project for the Udacity FSND nanodegree. It covers
 1.	Database modeling with postgres & sqlalchemy  : models.py
@@ -24,7 +25,7 @@ $ pip install -r requirements.txt
 ### 3.	Configure database
 to be able to run this project locally you have to edit the models.py file by modifying these two lines by putting your personal parameters. so that it connects to your local database Change database config so it can connect to your local postgres database
 ```
-database_name = 'agencydb'
+database_name = '<your_database_name>'
 database_local_path = "postgres://{}@{}/{}". format('<user_name>:<password>','localhost:5432', database_name)
 ```
 #### 4.	Setup Auth0 
@@ -459,6 +460,22 @@ Gets actors by movie
 }
 ```
 # Authentification
+The API has three registered users:
+1. Assistant:
+```
+email: assistant@agency.com
+password: Assistant2
+```
+2. Director
+```
+email: director@agency.com
+password: Director2
+```
+3. Producer
+```
+email: producer@agency.com
+password: Producer2
+```
 All API Endpoints are decorated with Auth0 permissions. To use the project locally, you need to config Auth0 
 ## Auth0 for locally use
 ### Create an App & API
@@ -466,10 +483,10 @@ All API Endpoints are decorated with Auth0 permissions. To use the project local
 2.	Click on Applications Tab
 3.	Create Application
 4.	Give it a name and select "Regular Web Application"
-5.	Go to Settings and find domain. Copy & paste it into config.py => auth0_config['AUTH0_DOMAIN'] 
+5.	Go to Settings and find domain. Copy & paste it into config.py => AUTH0_DOMAIN
 6.	Click on API Tab
 7.	Create a new API:
-8.	Go to Settings and find Identifier. Copy & paste it into config.py => auth0_config['API_AUDIENCE'] 
+8.	Go to Settings and find Identifier. Copy & paste it into config.py => API_AUDIENCE
 ### Create Roles & Permissions
 1.	Before creating Roles & Permissions, you need to Enable RBAC in your API 
 2.	Also, check the button Add Permissions in the Access Token.
