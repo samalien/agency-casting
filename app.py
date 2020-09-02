@@ -87,8 +87,8 @@ def create_app(test_config=None):
 
     @app.route('/login')
     def login():
-        return "https://dev-mrlzc2vg.us.auth0.com/authorize?audience=casting&response_type=token&client_id" \
-               "=4bH07NXNIJ02BMCRkZsN85JYRDkB4sVI&redirect_uri=https://agency-casting.herokuapp.com "
+        return auth0.authorize_redirect(redirect_uri=AUTH0_CALLBACK_URL,
+                                        audience=AUTH0_AUDIENCE)
 
     @app.route('/login_result')
     def login_result():
