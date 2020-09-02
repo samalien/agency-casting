@@ -6,23 +6,10 @@ from flask_cors import CORS
 from models import setup_db, Movie, Actor, Performance, db
 from flask_migrate import Migrate
 from auth import AuthError, requires_auth
-from authlib.flask.client import OAuth
-
-
-AUTH0_CALLBACK_URL = "https://agency-casting.herokuapp.com/"
-AUTH0_CLIENT_ID = "4bH07NXNIJ02BMCRkZsN85JYRDkB4sVI"
-AUTH0_CLIENT_SECRET = "udacity"
-AUTH0_DOMAIN = "dev-mrlzc2vg.us.auth0.com"
-AUTH0_BASE_URL = 'https://dev-mrlzc2vg.us.auth0.com'
-AUTH0_AUDIENCE = "casting"
 
 MOVIES_PER_PAGE = 10
 ACTORS_PER_PAGE = 10
 db = SQLAlchemy()
-
-
-
-
 
 
 def create_app(test_config=None):
@@ -31,19 +18,8 @@ def create_app(test_config=None):
     setup_db(app)
     CORS(app)
     migrate = Migrate(app, db)
-    app.secret_key = "udacity"
-    oauth = OAuth(app)
-    auth0 = oauth.register(
-        'auth0',
-        client_id=AUTH0_CLIENT_ID,
-        client_secret=AUTH0_CLIENT_SECRET,
-        api_base_url=AUTH0_BASE_URL,
-        access_token_url=AUTH0_BASE_URL + '/oauth/token',
-        authorize_url=AUTH0_BASE_URL + '/authorize',
-        client_kwargs={
-            'scope': 'openid profile email',
-        },
-    )
+    app.secret_key = "shdgfjhsdghj"
+
     # ------------------------------------------------------------------------
     # set Access-Control-allow, API Cofiguration
     # ------------------------------------------------------------------------
@@ -87,13 +63,11 @@ def create_app(test_config=None):
     @app.route('/login')
     def login():
         return "https://dev-mrlzc2vg.us.auth0.com/authorize?audience=casting&response_type=token&client_id" \
-               "=4bH07NXNIJ02BMCRkZsN85JYRDkB4sVI&redirect_uri=https://agency-casting.herokuapp.com"
+               "=4bH07NXNIJ02BMCRkZsN85JYRDkB4sVI&redirect_uri=https://agency-casting.herokuapp.com "
     @app.route('/login_result')
     def login_result():
-        res = auth0.authorize_access_token()
-        token = res.get('access_token')
-
-        session['jwt_token'] = token
+        access_token = request.args.get('access_token')
+        session['jwt_token'] = access_token
 
         return  render_template('dashboard.html')
 
