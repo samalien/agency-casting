@@ -78,6 +78,10 @@ def create_app(test_config=None):
     def index():
         return render_template('index.html')
 
+    @app.route('/login')
+    def login():
+        return auth0.authorize_redirect(redirect_uri='https://agency-casting.herokuapp.com/login_result')
+
     @app.route('/login_result')
     def login_result():
         access_token = request.args.get('access_token')
