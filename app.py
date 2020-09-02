@@ -3,6 +3,8 @@ import os
 from flask import Flask, request, abort, jsonify, render_template, session
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
+from werkzeug.utils import redirect
+
 from models import setup_db, Movie, Actor, Performance, db
 from flask_migrate import Migrate
 from auth import AuthError, requires_auth
@@ -38,6 +40,7 @@ def create_app(test_config=None):
         response.headers.add('Access-Control-Allow-Methods',
                              'GET,PUT,POST,PUT,PATCH,DELETE,OPTIONS')
         return response
+
     oauth = OAuth(app)
 
     auth0 = oauth.register(
@@ -51,6 +54,7 @@ def create_app(test_config=None):
             'scope': 'openid profile email',
         },
     )
+
     # --------------------------------------------------------------------------
     # Custom Functions
     # --------------------------------------------------------------------------
@@ -84,6 +88,7 @@ def create_app(test_config=None):
     def login():
         return "https://dev-mrlzc2vg.us.auth0.com/authorize?audience=casting&response_type=token&client_id" \
                "=4bH07NXNIJ02BMCRkZsN85JYRDkB4sVI&redirect_uri=https://agency-casting.herokuapp.com "
+
     @app.route('/login_result')
     def login_result():
         # Handles response from token endpoint
@@ -93,8 +98,16 @@ def create_app(test_config=None):
 
         # Store the user information in flask session.
         session['jwt_token'] = token
+        return redirect('/dashboard')
 
-        return render_template('dashboard.html',token=session['jwt_token'])
+        # return render_template('dashboard.html',token=session['jwt_token'])
+
+    @app.route('/dashboard')
+    def dashboard():
+        return render_template('dashboard.html',
+                               token=session['jwt_token'],
+                               )
+
 
     # ------------------------------------------------------------------------
     # API endpoints : movies GET/POST/DELETE/PATCH
