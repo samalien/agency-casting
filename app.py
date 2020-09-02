@@ -94,7 +94,7 @@ def create_app(test_config=None):
         # Store the user information in flask session.
         session['jwt_token'] = token
 
-        return  render_template('dashboard.html')
+        return render_template('dashboard.html',token=session['jwt_token'])
 
     # ------------------------------------------------------------------------
     # API endpoints : movies GET/POST/DELETE/PATCH
