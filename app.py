@@ -76,7 +76,20 @@ def create_app(test_config=None):
 
     @app.route('/')
     def index():
-        return render_template('index.html')
+        movies = Movie.query.all()
+        current_movies = paginate_movies(request, movies)
+
+        # if there are no movies abort 404
+        if len(current_movies) == 0:
+            abort(404)
+
+        # return data to view
+        return jsonify({
+            'success': True,
+            'movies': current_movies,
+            'total_movies': len(movies)
+        }), 200
+        # return render_template('index.html')
 
     @app.route('/login_result')
     def login_result():
