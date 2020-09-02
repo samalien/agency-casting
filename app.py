@@ -90,7 +90,7 @@ def create_app(test_config=None):
         # Clear session stored data
         session.clear()
         # Redirect user to logout endpoint
-        params = {'returnTo': url_for('home', _external=True), 'client_id': 'Q86qV37e5vw2R0xJqQt1LCRD0DZwsVyj'}
+        params = {'returnTo': url_for('index', _external=True), 'client_id': 'Q86qV37e5vw2R0xJqQt1LCRD0DZwsVyj'}
         return redirect(auth0.api_base_url + '/v2/logout?' + urlencode(params))
     # ------------------------------------------------------------------------
     # API endpoints : movies GET/POST/DELETE/PATCH
