@@ -103,9 +103,9 @@ def create_app(test_config=None):
         params = {'returnTo': url_for('index', _external=True), 'client_id': '4bH07NXNIJ02BMCRkZsN85JYRDkB4sVI'}
         return redirect(auth0.api_base_url + '/v2/logout?' + urlencode(params))
 
-    # ------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
     # API endpoints : movies GET/POST/DELETE/PATCH
-    # ------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
 
     # GET MOVIES
     @app.route('/movies', methods=['GET'])
