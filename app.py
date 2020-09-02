@@ -67,6 +67,16 @@ def create_app(test_config=None):
 
         return render_template('index.html')
 
+    @app.route('/logout')
+    def logout():
+        # Clear session stored data
+        session.clear()
+        # Redirect user to logout endpoint
+        # params = {'returnTo': url_for(
+        #     'index', _external=True), 'client_id': AUTH0_CLIENT_ID}
+        # return redirect(auth0.api_base_url + '/v2/logout?' + urlencode(params))
+        return render_template('index.html')
+
     # ------------------------------------------------------------------------
     # API endpoints : movies GET/POST/DELETE/PATCH
     # ------------------------------------------------------------------------
