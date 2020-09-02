@@ -76,17 +76,13 @@ def create_app(test_config=None):
     def index():
         return render_template('index.html')
 
-    @app.route('/login')
-    def login():
-        return "https://dev-mrlzc2vg.us.auth0.com/authorize?audience=casting&response_type=token&client_id" \
-               "=4bH07NXNIJ02BMCRkZsN85JYRDkB4sVI&redirect_uri=https://agency-casting.herokuapp.com "
+    # @app.route('/login')
+    # def login():
+    #     return "https://dev-mrlzc2vg.us.auth0.com/authorize?audience=casting&response_type=token&client_id" \
+    #            "=4bH07NXNIJ02BMCRkZsN85JYRDkB4sVI&redirect_uri=https://agency-casting.herokuapp.com "
     @app.route('/login_result')
     def login_result():
-        access_token = request.args.get('access_token')
-        session['jwt_token'] = access_token
-
-
-        return  render_template('dashboard.html')
+        return  render_template('index.html')
 
 
     @app.route('/logout')
