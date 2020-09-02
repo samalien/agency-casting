@@ -1,8 +1,12 @@
 import os
+from urllib.parse import urlencode
 
-from flask import Flask, request, abort, jsonify, render_template, session
+from authlib.integrations.flask_client import OAuth
+from flask import Flask, request, abort, jsonify, render_template, session, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
+from werkzeug.utils import redirect
+
 from models import setup_db, Movie, Actor, Performance, db
 from flask_migrate import Migrate
 from auth import AuthError, requires_auth, get_token_auth_header
@@ -30,7 +34,19 @@ def create_app(test_config=None):
         response.headers.add('Access-Control-Allow-Methods',
                              'GET,PUT,POST,PUT,PATCH,DELETE,OPTIONS')
         return response
+    oauth = OAuth(app)
 
+    auth0 = oauth.register(
+        'auth0',
+        client_id='4bH07NXNIJ02BMCRkZsN85JYRDkB4sVI',
+        client_secret='udacity',
+        api_base_url='https://dev-mrlzc2vg.us.auth0.com',
+        access_token_url='https://dev-mrlzc2vg.us.auth0.com' + '/oauth/token',
+        authorize_url='https://dev-mrlzc2vg.us.auth0.com' + '/authorize',
+        client_kwargs={
+            'scope': 'openid profile email',
+        },
+    )
     # --------------------------------------------------------------------------
     # Custom Functions
     # --------------------------------------------------------------------------
@@ -72,6 +88,14 @@ def create_app(test_config=None):
 
         return  render_template('dashboard.html')
 
+
+    @app.route('/logout')
+    def logout():
+        # Clear session stored data
+        session.clear()
+        # Redirect user to logout endpoint
+        params = {'returnTo': url_for('home', _external=True), 'client_id': 'Q86qV37e5vw2R0xJqQt1LCRD0DZwsVyj'}
+        return redirect(auth0.api_base_url + '/v2/logout?' + urlencode(params))
     # ------------------------------------------------------------------------
     # API endpoints : movies GET/POST/DELETE/PATCH
     # ------------------------------------------------------------------------
