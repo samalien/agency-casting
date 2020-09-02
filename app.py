@@ -1,3 +1,4 @@
+import json
 import os
 from urllib.parse import urlencode
 
@@ -83,11 +84,34 @@ def create_app(test_config=None):
         return auth0.authorize_redirect(redirect_uri='https://agency-casting.herokuapp.com/login_result')
 
     @app.route('/login_result')
-    def login_result():
-        access_token = request.args.get('access_token')
-        session['jwt_token'] = access_token
+    def callback_handling():
+        # Handles response from token endpoint
+        auth0.authorize_access_token()
+        resp = auth0.get('userinfo')
+        userinfo = resp.json()
 
-        return render_template('index.html')
+        # Store the user information in flask session.
+        session['jwt_payload'] = userinfo
+        session['profile'] = {
+            'user_id': userinfo['sub'],
+            'name': userinfo['name'],
+            'picture': userinfo['picture']
+        }
+        return redirect('/dashboard')
+
+    @app.route('/dashboard')
+    # @requires_auth
+    def dashboard():
+        return render_template('dashboard.html',
+                               userinfo=session['profile'],
+                               userinfo_pretty=json.dumps(session['jwt_payload'], indent=4))
+
+    # @app.route('/login_result')
+    # def login_result():
+    #     access_token = request.args.get('access_token')
+    #     session['jwt_token'] = access_token
+    #
+    #     return render_template('index.html')
 
     @app.route('/logout')
     def logout():
