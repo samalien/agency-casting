@@ -22,7 +22,7 @@ def create_app(test_config=None):
     setup_db(app)
     CORS(app)
     migrate = Migrate(app, db)
-    app.secret_key = "shdgfjhsdghj"
+    app.secret_key = "udacity"
 
     # ------------------------------------------------------------------------
     # set Access-Control-allow, API Cofiguration
