@@ -6,11 +6,7 @@ from urllib.request import urlopen
 from config import *
 
 
-# AUTH0_DOMAIN = 'dev-mrlzc2vg.us.auth0.com'
-# ALGORITHMS = ['RS256']
-# API_AUDIENCE = 'casting'
-
-## AuthError Exception
+# AuthError Exception
 '''
 AuthError Exception
 A standardized way to communicate auth failure modes

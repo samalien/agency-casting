@@ -6,6 +6,14 @@ from flask_cors import CORS
 from models import setup_db, Movie, Actor, Performance, db
 from flask_migrate import Migrate
 from auth import AuthError, requires_auth
+from authlib.flask.client import OAuth
+
+AUTH0_CALLBACK_URL = "https://agency-casting.herokuapp.com/login_result"
+AUTH0_CLIENT_ID = "4bH07NXNIJ02BMCRkZsN85JYRDkB4sVI"
+AUTH0_CLIENT_SECRET = "udacity"
+AUTH0_DOMAIN = "dev-mrlzc2vg.us.auth0.com"
+AUTH0_BASE_URL = 'https://dev-mrlzc2vg.us.auth0.com'
+AUTH0_AUDIENCE = "casting"
 
 MOVIES_PER_PAGE = 10
 ACTORS_PER_PAGE = 10
@@ -18,7 +26,7 @@ def create_app(test_config=None):
     setup_db(app)
     CORS(app)
     migrate = Migrate(app, db)
-    app.secret_key = "shdgfjhsdghj"
+    app.secret_key = "udacity"
 
     # ------------------------------------------------------------------------
     # set Access-Control-allow, API Cofiguration
@@ -30,7 +38,19 @@ def create_app(test_config=None):
         response.headers.add('Access-Control-Allow-Methods',
                              'GET,PUT,POST,PUT,PATCH,DELETE,OPTIONS')
         return response
+    oauth = OAuth(app)
 
+    auth0 = oauth.register(
+        'auth0',
+        client_id=AUTH0_CLIENT_ID,
+        client_secret=AUTH0_CLIENT_SECRET,
+        api_base_url=AUTH0_BASE_URL,
+        access_token_url=AUTH0_BASE_URL + '/oauth/token',
+        authorize_url=AUTH0_BASE_URL + '/authorize',
+        client_kwargs={
+            'scope': 'openid profile email',
+        },
+    )
     # --------------------------------------------------------------------------
     # Custom Functions
     # --------------------------------------------------------------------------
@@ -66,8 +86,13 @@ def create_app(test_config=None):
                "=4bH07NXNIJ02BMCRkZsN85JYRDkB4sVI&redirect_uri=https://agency-casting.herokuapp.com "
     @app.route('/login_result')
     def login_result():
-        access_token = request.args.get('access_token')
-        session['jwt_token'] = access_token
+        # Handles response from token endpoint
+
+        res = auth0.authorize_access_token()
+        token = res.get('access_token')
+
+        # Store the user information in flask session.
+        session['jwt_token'] = token
 
         return  render_template('dashboard.html')
 
