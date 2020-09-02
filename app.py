@@ -87,8 +87,8 @@ def create_app(test_config=None):
 
     @app.route('/login')
     def login():
-        return auth0.authorize_redirect(redirect_uri=AUTH0_CALLBACK_URL,
-                                        audience=AUTH0_AUDIENCE)
+        return auth0.authorize_redirect(redirect_uri="https://agency-casting.herokuapp.com/login_result",
+                                        audience="casting")
 
     @app.route('/login_result')
     def login_result():
