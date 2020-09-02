@@ -8,7 +8,8 @@ from werkzeug.utils import redirect
 from models import setup_db, Movie, Actor, Performance, db
 from flask_migrate import Migrate
 from auth import AuthError, requires_auth
-from authlib.flask.client import OAuth
+from authlib.integrations.flask_client import OAuth
+
 
 AUTH0_CALLBACK_URL = "https://agency-casting.herokuapp.com/login_result"
 AUTH0_CLIENT_ID = "4bH07NXNIJ02BMCRkZsN85JYRDkB4sVI"
@@ -105,7 +106,7 @@ def create_app(test_config=None):
     @app.route('/dashboard')
     def dashboard():
         return render_template('dashboard.html',
-                               token=session['jwt_token'],
+                               token=session['jwt_token']
                                )
 
 
